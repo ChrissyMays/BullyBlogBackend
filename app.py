@@ -45,9 +45,14 @@ def add_blog():
 
     return jsonify(blog_schema.dump(record))
 
+@app.route("/blog/all", methods=["GET"])
+def all():
+    records = db.session.query(BlogPosts).all()
+    return jsonify(multiple_blog_schema.dump(records))
+
 @app.route("/blog/get/ <id>", methods=["GET"])
 def get_blog_by_id(id):
-    record = db.session.querry(BlogPosts).filter(BlogPosts.id == id).first()
+    record = db.session.query(BlogPosts).filter(BlogPosts.id == id).first()
     return jsonify(blog_schema.dump(record))
 
 @app.route("/blog/update", methods=["PUT"])
